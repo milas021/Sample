@@ -1,0 +1,30 @@
+version: "3"
+services :
+    sqlserver:
+        container_name: sqlserver
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        ports:
+          - 8002:1433
+        environment:
+            - ACCEPT_EULA=Y
+            - SA_PASSWORD=Sql00Server
+        volumes:
+            - C:/Fam/SqlData/data:/var/opt/mssql/data
+            - C:/Fam/SqlData/log:/var/opt/mssql/log
+            - C:/Fam/SqlData/secrets:/var/opt/mssql/secrets
+    sample :
+        build:  
+          context: .
+          dockerfile: Dockerfile
+        container_name: sample
+
+        ports:
+         - "8585:4545"
+        environment:
+          - ASPNETCORE_ENVIRONMENT=Development
+          - ASPNETCORE_URLS=http://+:4545
+          
+        depends_on:
+            - sqlserver
+      
+    
