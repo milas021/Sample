@@ -17,12 +17,13 @@ services :
           context: .
           dockerfile: Dockerfile
         container_name: sample
-
+        
+      
         ports:
-         - "8585:4545"
+         - "8585:80"
         environment:
           - ASPNETCORE_ENVIRONMENT=Development
-          - ASPNETCORE_URLS=http://+:4545
+          
           
         depends_on:
             - sqlserver
